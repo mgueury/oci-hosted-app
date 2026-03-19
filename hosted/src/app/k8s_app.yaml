@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hosted-dep
+  labels:
+      app: hosted-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hosted-app
+  template:
+    metadata:
+      labels:
+        app: hosted-app
+    spec:
+      containers:
+      - name: app
+        image: ##DOCKER_PREFIX##/hosted-app:latest
+        ports:
+        - containerPort: 8080
+          name: app-port
+        env:        
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: hosted-db-secret
+              key: db_url      
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: hosted-db-secret
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hosted-db-secret
+              key: db_password
+#        - name: POD_IP
+#          valueFrom:
+#            fieldRef:
+#              fieldPath: status.podIP
+      imagePullSecrets:
+      - name: ocirsecret        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hosted-app-service
+spec:
+  selector:
+    app: hosted-app
+  ports:
+  - name: http-service-port
+    protocol: TCP
+    port: 80
+    targetPort: app-port
+---
