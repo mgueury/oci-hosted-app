@@ -73,7 +73,8 @@ elif [ "$ARG1" == "help" ]; then
 elif [ "$ARG1" == "build" ]; then
   if [ "$ARG2" == "app" ]; then
     # Build all apps
-    for APP_NAME in `app_name_list`; do
+    . $BIN_DIR/shared_bash_function.sh
+    for APP_NAME in `app_name_list`; do       
         title "Build App $APP_NAME"
         src/app/build_$APP_NAME.sh ${@:2}
         exit_on_error "Build App $APP_NAME"
