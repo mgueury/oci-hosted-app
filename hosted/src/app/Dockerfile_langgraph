@@ -15,5 +15,5 @@ RUN uv pip install -r requirements.txt
 # Copy the APP
 COPY src_langgraph/* /app/
 
-ENTRYPOINT ["langgraph", "dev", "--host", "0.0.0.0"]
+ENTRYPOINT ["langgraph", "dev", "--host", "0.0.0.0", "--port", "8080"]
 

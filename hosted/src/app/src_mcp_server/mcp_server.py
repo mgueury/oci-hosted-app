@@ -42,4 +42,4 @@ def get_dept() -> list[dict[str, Any]]:
 
 if __name__ == "__main__":
     # mcp.run(transport="stdio")  # Run the server, using standard input/output for communication
-    mcp.run(transport="http", host="0.0.0.0", port=2025)
+    mcp.run(transport="http", host="0.0.0.0", port=8080)
