@@ -33,7 +33,7 @@ locals {
     for v in data.oci_containerengine_cluster_option.starter_cluster_option.kubernetes_versions : v
     if !endswith(v, ".0")
   ]
-  oke_latest_stable_version=locals.oke_stable_versions[length(locals.oke_stable_versions)-1]
+  oke_latest_stable_version=local.oke_stable_versions[length(local.oke_stable_versions)-1]
 }
 
 data "oci_containerengine_node_pool_option" "starter_node_pool_option" {
